@@ -1,0 +1,10 @@
+version: '3'
+services:
+  hash-table-unit-tests:
+    build: .
+    working_dir: /workspace
+    volumes:
+    - .:/workspace
+    - "/etc/timezone:/etc/timezone:ro"
+    - "/etc/localtime:/etc/localtime:ro"
+    user: ${CURRENT_UID}
