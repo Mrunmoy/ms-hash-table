@@ -1,27 +1,38 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-# Color vars
-COLOR_RED='\033[0;31m'
-COLOR_GREEN='\033[0;32m'
-COLOR_YELLOW='\033[1;33m'
-COLOR_RESET='\033[0m'
+# Reference: https://codereview.stackexchange.com/questions/137877/shell-script-wrapper-for-docker-build-and-run
 
-# Err Log
-function err_log()
-{
- printf "\n${COLOR_RED}######################${COLOR_RESET}\n"
- printf "${COLOR_RED}# ${YELLOW}** Build failed ** ${RED}#\n"
- printf "${COLOR_RED}######################${COLOR_RESET}\n"
- printf "Error:${COLOR_RESET} %s\n" "$1"
- exit 1
+readonly CURRENT_DIRECTORY="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${CURRENT_DIRECTORY}/scripts/config.sh"
+source "${CURRENT_DIRECTORY}/scripts/util.sh"
+
+# usage: build_image [tag]
+build_image() {
+  # Generate image name
+  local name="${DOCKER_IMAGE_NAME}:$(arg_or_default "$1" \
+                                                    "${DOCKER_IMAGE_TAG}")"
+
+  print "building unit tests ${name}"
+
+  # Run docker with the provided arguments
+  docker build -t "${name}" \
+                  "${CURRENT_DIRECTORY}/${DOCKER_LOCAL_SOURCE_DIRECTORY}"
 }
 
-# Docker build option
-if [ $1 ] && [ $1 == "--docker-build" ]; then
-  CURRENT_UID=$(id -u):$(id -g)
-  docker-compose run --user=$CURRENT_UID unittests-env ./build.sh
-  exit
-fi
+# usage: main [-h] [-d DATA_DIRECTORY] [-t TAG] [ARGS...]
+main() {
+  check_requirements "$@" || exit 1
+
+  # Docker build option
+  if [ $1 ] && [ $1 == "--docker-build" ]; then
+    docker-compose run --user=$CURRENT_UID hash-table-unit-tests ./build.sh
+    exit
+  fi
+  build_image "$@"
+}
+
+
 
 # Build & Run Tests
 printf "\n--- Build & Unit Tests\n"
