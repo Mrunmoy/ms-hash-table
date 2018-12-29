@@ -58,9 +58,7 @@ ENDIF()
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
     SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
     SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-
     include(CodeCoverage)
     set(COVERAGE_GCOVR_EXCLUDES '${PROJECT_SOURCE_DIR}/tests' '${PROJECT_SOURCE_DIR}/dependencies')
-    SETUP_TARGET_FOR_COVERAGE_GCOVR_XML(NAME xml_coverage EXECUTABLE unit-tests DEPENDENCIES unit-tests)
-    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage EXECUTABLE unit-tests DEPENDENCIES unit-tests)
+    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage EXECUTABLE unit-tests DEPENDENCIES unit-tests --print-summary)
 endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
