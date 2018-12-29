@@ -5,7 +5,7 @@
 CURRENT_USER=$(whoami)
 CURRENT_UID=$(id -u):$(id -g)
 
-readonly DOCKER_IMAGE_NAME="$(CURRENT_USER)/hash-table"
+readonly DOCKER_IMAGE_NAME="${CURRENT_USER}/hash-table"
 readonly DOCKER_IMAGE_TAG="0.1.0"
 readonly DOCKER_IMAGE_MOUNT="~/docker/data"
 
