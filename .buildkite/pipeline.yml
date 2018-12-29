@@ -1,0 +1,19 @@
+steps:
+- label: ':docker: Test & Build'
+  plugins:
+    docker-compose#v2.5.1:
+      run: unittests-env
+      env:
+      - BUILDKITE
+      - BUILDKITE_BUILD_NUMBER
+      - BUILDKITE_BUILD_URL
+      - BUILDKITE_BUILD_NUMBER
+      - BUILDKITE_BUILD_CREATOR_EMAIL
+      - BUILDKITE_BUILD_CREATOR
+      - BUILDKITE_COMMIT
+      - BUILDKITE_BRANCH
+      - BUILDKITE_PULL_REQUEST
+  command: ./build.sh
+  agents:
+  - "unittests=true"
+  timeout: 20
