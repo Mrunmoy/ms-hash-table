@@ -1,12 +1,14 @@
-cmake_minimum_required(VERSION 3.12)
-IF (WIN32)
-    # set stuff for windows
-ELSE()
-    find_library(LIBRT rt)
-ENDIF()
+cmake_minimum_required(VERSION 3.10)
 
 # Project Name
 project(hash_table C CXX)
+
+IF (WIN32)
+    # set stuff for windows
+ELSE()
+    find_package(Threads REQUIRED)
+    find_library(LIBRT rt)
+ENDIF()
 
 # Compiler Standards
 set(CMAKE_C_STANDARD 99)
