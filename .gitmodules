@@ -1,0 +1,3 @@
+[submodule "dependencies/ms-cpputest"]
+	path = dependencies/ms-cpputest
+	url = git@github.com:Mrunmoy/cpputest.git
