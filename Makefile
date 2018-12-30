@@ -25,6 +25,7 @@ clean:
 	@rm -fr build > /dev/null
 	@rm -f Makefile.bak > /dev/null
 	@rm -fr CMakeFiles > /dev/null
+	@rm -fr tests/CMakeFiles > /dev/null
 
 rebuild: clean build
 
