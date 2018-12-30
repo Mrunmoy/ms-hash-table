@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![Build status](https://badge.buildkite.com/87a6607a8e36ebd82c8718671192f4bf4a66bb601e6bf9a0ba.svg)](https://buildkite.com/enspawn/ms-hash-table)
 
 ## A Simple Hash Table 
@@ -42,3 +43,10 @@ The following functions are available in the library:
 This implements the tester wrapper class which is used in file ```TestHashTable.cpp``` for implementing the unit-tests.
 
 Have a look at the [Project Page](https://github.com/Mrunmoy/ms-hash-table/projects) for upcoming enhancement/bugfixes
+=======
+# ms-hash-table
+[![Build status](https://badge.buildkite.com/87a6607a8e36ebd82c8718671192f4bf4a66bb601e6bf9a0ba.svg)](https://buildkite.com/enspawn/ms-hash-table)
+
+
+hash table implementation
+>>>>>>> Update README.md
