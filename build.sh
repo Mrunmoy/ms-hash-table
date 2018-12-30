@@ -9,7 +9,7 @@ mkdir -p build/unit-tests
 pushd build/unit-tests
 
 cmake ../.. -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
-make -j 4 || echo "build failed"
+make coverage -j 4 || echo "build failed"
 
 pushd build/bin
 ./unit-tests  || error "unit test(s) failed"
