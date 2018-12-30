@@ -10,9 +10,7 @@ ELSE()
     find_library(LIBRT rt)
 ENDIF()
 
-target_include_directories( ${PROJECT_NAME}
-        PUBLIC ${PROJECT_SOURCE_DIR}/inc
-        )
+include_directories(${PROJECT_SOURCE_DIR}/inc)
 
 # Directories Settings
 set(BUILD_DIR ${CMAKE_BINARY_DIR}/build)
@@ -43,7 +41,7 @@ include_directories(inc
 
 # Unit Test executable
 
-add_executable(${PROJECT_NAME} tests/AllTests.cpp tests/TestHashTable.cpp)
+add_executable(${PROJECT_NAME} AllTests.cpp TestHashTable.cpp)
 
 # Link all the binaries/libraries to build the executable
 
