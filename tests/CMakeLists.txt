@@ -10,9 +10,6 @@ ELSE()
     find_library(LIBRT rt)
 ENDIF()
 
-add_library(${PROJECT_NAME} tests/AllTests.cpp tests/TestHashTable.cpp)
-add_library(sub::utlib ALIAS ${PROJECT_NAME})
-
 target_include_directories( ${PROJECT_NAME}
         PUBLIC ${PROJECT_SOURCE_DIR}/inc
         )
@@ -24,14 +21,14 @@ set(CMAKE_CXX_STANDARD 11)
 # add cpputest library
 SET(CppUTestRootDirectory ${PROJECT_SOURCE_DIR}/dependencies/ms-cpputest)
 SET(CPP_PLATFORM Gcc)
-add_subdirectory(${CppUTestRootDirectory} CppUTestHome)
+add_subdirectory(${CppUTestRootDirectory})
 
 include_directories(inc
         ${CppUTestRootDirectory}/include)
 
 # Unit Test executable
 
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(${PROJECT_NAME} tests/AllTests.cpp tests/TestHashTable.cpp)
 
 # Link all the binaries/libraries to build the executable
 
@@ -42,7 +39,6 @@ ELSE()
     # Link the header only library from subproject2 using it's alias sub::lib2
     # This will cause the include directories for that target to be added to this project
     target_link_libraries(${PROJECT_NAME}
-            sub::utlib
             hash-table
             CppUTest
             CppUTestExt
