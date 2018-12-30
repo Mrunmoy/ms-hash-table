@@ -1,4 +1,6 @@
-## A Simple Hash Table
+[![Build status](https://badge.buildkite.com/87a6607a8e36ebd82c8718671192f4bf4a66bb601e6bf9a0ba.svg)](https://buildkite.com/enspawn/ms-hash-table)
+
+## A Simple Hash Table 
 
 A simple hash implementation of hash table data structure in C.
 [Reference](http://www.cs.yale.edu/homes/aspnes/pinewiki/C(2f)HashTables.html?highlight=%28CategoryAlgorithmNotes%29)
