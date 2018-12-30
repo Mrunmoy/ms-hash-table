@@ -1,44 +1,51 @@
 #!/usr/local/bin/python
 
-# change above line to point to local 
+# change above line to point to local
 # python executable
 
-import getopt, sys, urllib2
+import getopt
+import sys
 from bs4 import BeautifulSoup
+
 
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv,"i:",["ifile="])
+        opts, args = getopt.getopt(argv, "i:", ["ifile="])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-i", "--ifile"):
             inputfile = arg
-    
-    f = open(inputfile)      # simplified for the example (no urllib)
+
+    f = open(inputfile)  # simplified for the example (no urllib)
     soup = BeautifulSoup(f, features="html.parser")
     f.close()
-    
-    g_a = soup.findAll(id="headerTableEntry")  # the elements from inside the div a element
-    alst = []                                # the future result list
-    for x in g_a:
-        for elem in x.findAll('div'):        # the divs inside the div a
-            print elem.contents              # just to see what is inside
-            alst.append(elem.contents[0].strip('\n\t ,'))  # collect the wanted info
 
-    print alst               # wanted result in a technical form
-    print ', '.join(alst)    # wanted result as a string (items separated by comma and space
+    line_details = soup.find("td", text="Lines:")
+    stats_lines_executed = line_details.find_next(attrs={"class": "headerTableEntry"})
+    stats_lines_total = stats_lines_executed.find_next(attrs={"class": "headerTableEntry"})
+    stats_lines_coverage = stats_lines_total.find_next(attrs={"class": "headerTableEntry"})
+
+    branch_details = soup.find("td", text="Legend:")
+    stats_branch_executed = branch_details.find_next(attrs={"class": "headerTableEntry"})
+    stats_branch_total = stats_branch_executed.find_next(attrs={"class": "headerTableEntry"})
+    stats_branch_coverage = stats_branch_total.find_next(attrs={"class": "headerTableEntry"})
+    print('lines_executed: {} lines_total: {} lines_coverage: {}'.format(stats_lines_executed.text,
+                                                                         stats_lines_total.text,
+                                                                         stats_lines_coverage.text))
+    print('branch_executed: {} branch_total: {} branch_coverage: {}'.format(stats_branch_executed.text,
+                                                                            stats_branch_total.text,
+                                                                            stats_branch_coverage.text))
 
 
 def usage():
-    print ' ------------------------------------------------'
-    print ' Mrunmoy Samal (mrunmoy@gmail.com) , 2018'
-    print ' python coverage_parser.py -i coverage-html-filename'
-    print ' ------------------------------------------------'
+    print(' ------------------------------------------------')
+    print(' Mrunmoy Samal (mrunmoy@gmail.com) , 2018')
+    print(' python coverage_parser.py -i coverage-html-filename')
+    print(' ------------------------------------------------')
 
 
-#-------------------------------
+# -------------------------------
 if __name__ == "__main__":
     main(sys.argv[1:])
-

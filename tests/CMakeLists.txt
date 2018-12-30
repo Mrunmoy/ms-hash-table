@@ -44,6 +44,9 @@ include_directories(inc
         ${CppUTestRootDirectory}/include)
 
 # Unit Test executable
+# build library for hash-table
+add_library(hash-table-lib
+        ../src/hash_table.c)
 
 add_executable(${PROJECT_NAME} AllTests.cpp TestHashTable.cpp)
 
@@ -56,7 +59,7 @@ else()
     # Link the header only library from subproject2 using it's alias sub::lib2
     # This will cause the include directories for that target to be added to this project
     target_link_libraries(${PROJECT_NAME}
-            hash-table
+            hash-table-lib
             CppUTest
             CppUTestExt
             ${LIBRT}
@@ -67,7 +70,7 @@ endif()
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
     include(CodeCoverage)
     APPEND_COVERAGE_COMPILER_FLAGS() 
-    set(COVERAGE_GCOVR_EXCLUDES '${PROJECT_SOURCE_DIR}/tests' '${PROJECT_SOURCE_DIR}/dependencies')
+    set(COVERAGE_GCOVR_EXCLUDES '.' '${PROJECT_SOURCE_DIR}/dependencies')
     SETUP_TARGET_FOR_COVERAGE_GCOVR_XML(NAME xml_coverage EXECUTABLE ${PROJECT_NAME} DEPENDENCIES ${PROJECT_NAME} )
     SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage EXECUTABLE ${PROJECT_NAME} DEPENDENCIES ${PROJECT_NAME} )
 endif()
