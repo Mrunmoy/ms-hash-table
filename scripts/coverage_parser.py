@@ -31,12 +31,15 @@ def main(argv):
     stats_branch_executed = branch_details.find_next(attrs={"class": "headerTableEntry"})
     stats_branch_total = stats_branch_executed.find_next(attrs={"class": "headerTableEntry"})
     stats_branch_coverage = stats_branch_total.find_next(attrs={"class": "headerTableEntry"})
-    print('lines_executed: {} lines_total: {} lines_coverage: {}'.format(stats_lines_executed.text,
+    print('Coverage Stats:')
+    print('--------------------------')
+    print('lines_executed: {}\nlines_total: {}\nlines_coverage: {}'.format(stats_lines_executed.text,
                                                                          stats_lines_total.text,
                                                                          stats_lines_coverage.text))
-    print('branch_executed: {} branch_total: {} branch_coverage: {}'.format(stats_branch_executed.text,
+    print('\nbranch_executed: {}\nbranch_total: {}\nbranch_coverage: {}'.format(stats_branch_executed.text,
                                                                             stats_branch_total.text,
                                                                             stats_branch_coverage.text))
+    print('---------------------------\n')
 
 
 def usage():

@@ -5,15 +5,12 @@
 # Build & Run Unit Tests
 printf "\n--- Build & Run Unit Tests\n"
 
-mkdir -p build/unit-tests
-pushd build/unit-tests
+mkdir -p build/unit-tests > /dev/null
+pushd build/unit-tests > /dev/null
 
+set echo off
 cmake ../.. -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
 make coverage -j 4 || echo "build failed"
-
-pushd build/bin
-./unit-tests  || error "unit test(s) failed"
-popd
-popd
-
+popd > /dev/null
+python scripts/coverage_parser.py -i build/unit-tests/tests/coverage/index.html
 
