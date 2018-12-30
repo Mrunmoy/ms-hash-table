@@ -22,9 +22,12 @@ main() {
   # Build & Run Unit Tests
   printf "\n--- Build & Run Unit Tests\n"
 
-  cmake ../ -DCMAKE_BUILD_TYPE=Coverage || error "failed \"cmake CMakeLists.txt\""
-  make coverage -j || error "build or test(s) failed"
 
+  cmake . -DCMAKE_BUILD_TYPE=Coverage || error "failed to configure project"
+  make coverage -j || error "build failed"
 
+  pushd build/bin
+  ./unit-tests  || error "unit test(s) failed"
+  popd
 }
 

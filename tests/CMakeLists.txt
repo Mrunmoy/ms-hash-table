@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 # Project Name
 project(unit-tests C CXX)
 
-set(MS_PROJECT_ROOT ${PROJECT_SOURCE_DIR} PARENT_SCOPE)
-set(MS_PROJECT_TEST_TARGET unit-tests)
-
 IF (WIN32)
     # set stuff for windows
 ELSE()
@@ -13,26 +10,16 @@ ELSE()
     find_library(LIBRT rt)
 ENDIF()
 
+add_library(${PROJECT_NAME} tests/AllTests.cpp tests/TestHashTable.cpp)
+add_library(sub::utlib ALIAS ${PROJECT_NAME})
+
+target_include_directories( ${PROJECT_NAME}
+        PUBLIC ${PROJECT_SOURCE_DIR}/inc
+        )
+
 # Compiler Standards
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
-
-# Directories Settings
-set(BUILD_DIR ${CMAKE_BINARY_DIR}/build)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BUILD_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BUILD_DIR}/lib)
-set(CMAKE_INSTALL_LIBDIR ${BUILD_DIR}/lib)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/scripts)
-
-# Preprocessor Definitions
-add_definitions(-DUNIT_TEST=1)
-
-# Build Flags
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
 
 # add cpputest library
 SET(CppUTestRootDirectory ${PROJECT_SOURCE_DIR}/dependencies/ms-cpputest)
@@ -43,14 +30,24 @@ include_directories(inc
         ${CppUTestRootDirectory}/include)
 
 # Unit Test executable
-add_executable(unit-tests tests/AllTests.cpp tests/TestHashTable.cpp)
+
+add_executable(${PROJECT_NAME} src/main.c)
 
 # Link all the binaries/libraries to build the executable
 
 IF (WIN32)
     # set stuff for windows
 ELSE()
-    target_link_libraries(unit-tests hash-table CppUTest CppUTestExt ${LIBRT})
+    # Link the static library from subproject1 using it's alias sub::lib1
+    # Link the header only library from subproject2 using it's alias sub::lib2
+    # This will cause the include directories for that target to be added to this project
+    target_link_libraries(${PROJECT_NAME}
+            sub::utlib
+            hash-table
+            CppUTest
+            CppUTestExt
+            ${LIBRT}
+            )
 ENDIF()
 
 # Code Coverage Check

@@ -28,8 +28,10 @@ include_directories(inc)
 add_library(hash-table
         src/hash_table.c)
 
-# unit test build
-if (CMAKE_BUILD_TYPE STREQUAL "UnitTests")
-    add_subdirectory(tests unit-tests)
-endif() #CMAKE_BUILD_TYPE STREQUAL "UnitTests"
+# -- Unit Tests -- #
+enable_testing()
 
+# unit test build
+if(testing_enabled)
+    add_subdirectory(tests)
+endif()
