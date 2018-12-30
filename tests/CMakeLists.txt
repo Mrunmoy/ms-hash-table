@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project Name
-project(hash_table C CXX)
+project(unit-tests C CXX)
+
+set(MS_PROJECT_ROOT ${PROJECT_SOURCE_DIR} PARENT_SCOPE)
+set(MS_PROJECT_TEST_TARGET unit-tests)
 
 IF (WIN32)
     # set stuff for windows
@@ -38,10 +41,6 @@ add_subdirectory(${CppUTestRootDirectory} CppUTestHome)
 
 include_directories(inc
         ${CppUTestRootDirectory}/include)
-
-# build library for hash-table
-add_library(hash-table
-        src/hash_table.c)
 
 # Unit Test executable
 add_executable(unit-tests tests/AllTests.cpp tests/TestHashTable.cpp)

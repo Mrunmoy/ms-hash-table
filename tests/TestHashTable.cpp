@@ -103,7 +103,7 @@ TEST_GROUP(PositiveTestCases)
     {
         time_t t;
 
-        /* Intializes random number generator */
+        /* Initializes random number generator */
         srand((unsigned) time(&t));
     }
 };
@@ -117,6 +117,7 @@ TEST(PositiveTestCases, CreateHashTable)
 {
     HashTableTester * pTester = new HashTableTester(HASH_TABLE_SIZE);
     CHECK(NULL != pTester);
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddOneItem)
@@ -125,6 +126,7 @@ TEST(PositiveTestCases, AddOneItem)
     CHECK((NULL != pTester));
 
     CHECK((true == pTester->add(1, 12)));
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddTwoItems)
@@ -134,6 +136,8 @@ TEST(PositiveTestCases, AddTwoItems)
 
     CHECK((true == pTester->add(1, 12)));
     CHECK((true == pTester->add(2, 22)));
+
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddMaxItems)
@@ -145,6 +149,8 @@ TEST(PositiveTestCases, AddMaxItems)
     {
         CHECK((true == pTester->add(i + 1, rand() % HASH_TABLE_SIZE)));
     }
+
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddOneItemAndDelete)
@@ -154,6 +160,8 @@ TEST(PositiveTestCases, AddOneItemAndDelete)
 
     CHECK((true == pTester->add(1, rand() % HASH_TABLE_SIZE)));
     CHECK((true == pTester->remove(1)));
+
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddMaxItemAndDeleteAll)
@@ -170,6 +178,8 @@ TEST(PositiveTestCases, AddMaxItemAndDeleteAll)
     {
         CHECK((true == pTester->remove(i + 1)));
     }
+
+    delete pTester;
 }
 
 TEST(PositiveTestCases, AddMaxItemsAndLookup)
@@ -190,5 +200,7 @@ TEST(PositiveTestCases, AddMaxItemsAndLookup)
     {
         pTester->add(i + 1, rand() % HASH_TABLE_SIZE);
     }
+
+    delete pTester;
 }
 
