@@ -5,10 +5,15 @@
 # Build & Run Unit Tests
 printf "\n--- Build & Run Unit Tests\n"
 
-cmake . -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
+mkdir -p build/unit-tests
+pushd build/unit-tests
+
+cmake ../.. -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
 make -j 4 || echo "build failed"
 
 pushd build/bin
 ./unit-tests  || error "unit test(s) failed"
 popd
+popd
+
 
