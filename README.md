@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+## A Simple Hash Table
 
-You can use the [editor on GitHub](https://github.com/Mrunmoy/ms-hash-table/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+A simple hash implementation of hash table data structure in C.
+[Reference](http://www.cs.yale.edu/homes/aspnes/pinewiki/C(2f)HashTables.html?highlight=%28CategoryAlgorithmNotes%29)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Folder Layout
 
-### Markdown
+    .
+    ├── build                   # Compiled files (alternatively `dist`)
+    ├── inc                     # Interface Header file for using hash-table library
+    ├── src                     # Hash table implementation C file 
+    ├── tests                   # Automated tests 
+    ├── tests                   
+        ├── dependencies        # CppUTest dependent submodule
+    ├── scripts                 # Useful scripts for this project
+    ├── .buildkite              # Buildkite Pipeline settings                   
+    ├── docker                  # Dockerfile source
+    ├── LICENSE                 # MIT Licence
+    └── README.md
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Library
+The following functions are available in the library:
 
-```markdown
-Syntax highlighted code block
+#### Create a dynamically allocated hash table
+```- hash_table_ptr create_new_hash_table(size_t hash_table_size);```
 
-# Header 1
-## Header 2
-### Header 3
+#### Release hash table and all it's item's memory after use
+```- void destroy_hash_table(hash_table_ptr p_hash_table);```
 
-- Bulleted
-- List
+#### Add a new element to the table
+```- bool insert_into_hash_table(hash_table_ptr p_hash_table, int key, int value);```
 
-1. Numbered
-2. List
+#### Search for an existing element in the table
+```- bool is_item_in_hash_table(hash_table_ptr p_hash_table, const int key, int *p_value);```
 
-**Bold** and _Italic_ and `Code` text
+#### Remove an existing element from the table
+```- bool delete_from_hash_table(hash_table_ptr p_hash_table, int key);```
 
-[Link](url) and ![Image](src)
-```
+#### HashTableTester Class
+This implements the tester wrapper class which is used in file ```TestHashTable.cpp``` for implementing the unit-tests.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Mrunmoy/ms-hash-table/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Have a look at the [Project Page](https://github.com/Mrunmoy/ms-hash-table/projects) for upcoming enhancement/bugfixes
