@@ -28,10 +28,5 @@ include_directories(inc)
 add_library(hash-table
         src/hash_table.c)
 
-# -- Unit Tests -- #
-enable_testing()
-
 # unit test build
-if(testing_enabled)
-    add_subdirectory(tests)
-endif()
+add_subdirectory(tests)
