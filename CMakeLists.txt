@@ -24,7 +24,6 @@ SET(CPP_PLATFORM Gcc)
 
 include_directories(inc)
 
-
 # build library for hash-table
 add_library(hash-table
         src/hash_table.c)
@@ -33,14 +32,14 @@ add_library(hash-table
 add_subdirectory(tests unit-tests)
 
 # Code Coverage Check
-if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+if (CMAKE_BUILD_TYPE STREQUAL "CCR")
     include(CodeCoverage)
     APPEND_COVERAGE_COMPILER_FLAGS()
-    message('----------------------')
-    message( ${PROJECT_SOURCE_DIR} )
-    message('----------------------')
+    # message('----------------------')
+    # message( ${PROJECT_SOURCE_DIR} )
+    # message('----------------------')
     set(COVERAGE_GCOVR_EXCLUDES  '${PROJECT_SOURCE_DIR}/tests' '${PROJECT_SOURCE_DIR}/tests/dependencies')
-    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage EXECUTABLE unit-tests DEPENDENCIES unit-tests )
+    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME ccr EXECUTABLE unit-tests DEPENDENCIES unit-tests )
 endif()
 
 

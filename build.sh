@@ -9,8 +9,13 @@ mkdir -p build/unit-tests > /dev/null
 pushd build/unit-tests > /dev/null
 
 set echo off
-cmake -quite ../.. -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
-make coverage -j 4 || echo "build failed"
+FAILED="false"
+cmake -quite ../.. -DCMAKE_BUILD_TYPE=CCR || echo "failed to configure project" && FAILED="true"
+make ccr -j 4 || echo "build failed" && FAILED="true"
 popd > /dev/null
-python scripts/coverage_parser.py -i build/unit-tests/coverage/index.html
+
+if [[ "$FAILED" == "false" ]]; then
+	python scripts/coverage_parser.py -i build/unit-tests/ccr/index.html
+fi
+
 
