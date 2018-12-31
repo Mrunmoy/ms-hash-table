@@ -5,17 +5,19 @@
 # Build & Run Unit Tests
 printf "\n--- Build & Run Unit Tests\n"
 
-mkdir -p build/unit-tests > /dev/null
-pushd build/unit-tests > /dev/null
+readonly CURRENT_DIRECTORY="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "${CURRENT_DIRECTORY}/scripts/config.sh"
+source "${CURRENT_DIRECTORY}/scripts/util.sh"
+
+# symlink CMakeList.txt
+ln -sf CMakeListsBuild.txt CMakeLists.txt
+
+mkdir -p build > /dev/null
+pushd build > /dev/null
 
 set echo off
 FAILED="false"
-cmake -quite ../.. -DCMAKE_BUILD_TYPE=CCR || echo "failed to configure project" && FAILED="true"
-make ccr -j 4 || echo "build failed" && FAILED="true"
+cmake -quite ../. || (FAILED="true" && error "failed to configure project")
+make -j 4 || (FAILED="true" && error "build failed")
 popd > /dev/null
-
-if [[ "$FAILED" == "false" ]]; then
-	python scripts/coverage_parser.py -i build/unit-tests/ccr/index.html
-fi
-
 
