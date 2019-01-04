@@ -11,7 +11,7 @@ COLOR_RESET='\033[0m'
 
 # usage: error [args...]
 error() {
-  print "${COLOR_RED}error: $*${COLOR_RESET}" >&2
+  printf "\n${COLOR_RED}error: $*${COLOR_RESET}\n" >&2
 }
 
 # usage: check_requirements

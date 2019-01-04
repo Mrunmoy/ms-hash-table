@@ -5,15 +5,19 @@
 # Build & Run Unit Tests
 printf "\n--- Build & Run Unit Tests\n"
 
-mkdir -p build/unit-tests
-pushd build/unit-tests
+readonly CURRENT_DIRECTORY="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "${CURRENT_DIRECTORY}/scripts/config.sh"
+source "${CURRENT_DIRECTORY}/scripts/util.sh"
 
-cmake ../.. -DCMAKE_BUILD_TYPE=Coverage || echo "failed to configure project"
-make -j 4 || echo "build failed"
+# symlink CMakeList.txt
+ln -sf CMakeListsBuild.txt CMakeLists.txt
 
-pushd build/bin
-./unit-tests  || error "unit test(s) failed"
-popd
-popd
+mkdir -p build > /dev/null
+pushd build > /dev/null
 
+set echo off
+FAILED="false"
+cmake -quite ../. || (FAILED="true" && error "failed to configure project")
+make -j 4 || (FAILED="true" && error "build failed")
+popd > /dev/null
 
