@@ -80,15 +80,12 @@ static unsigned long get_hash(int key)
 {
     unsigned const char *us;
     unsigned long h;
-    char str[30];
-
-    snprintf(str, sizeof(str), "%d", key);
     h = 0;
 
-    for(us = (unsigned const char *) str; *us; us++) {
-        h = h * MULTIPLIER + *us;
+    for(;key;) {
+        h = h * MULTIPLIER + ((key >> 1) & 0xFF);
+        key >>= 1;
     }
-
     return h;
 }
 
